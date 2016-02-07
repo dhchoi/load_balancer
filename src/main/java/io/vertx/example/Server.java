@@ -117,7 +117,7 @@ public class Server {
         // remove DC with corresponding ip
         boolean removed = false;
         for (DataCenterInstance instance : instances) {
-            if (instance.getUrl().equals(ip)) {
+            if (instance.getIp().equals(ip)) {
                 instances.remove(instance);
                 System.out.println("[Server-REMOVE] successfully removed data center instance");
                 removed = true;

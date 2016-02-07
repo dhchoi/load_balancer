@@ -6,16 +6,16 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class DataCenterInstance {
-	public final String name;
+	public final String ip;
 	public final String url;
 
-	public DataCenterInstance(String name, String url) {
-		this.name = name;
-		this.url = url;
+	public DataCenterInstance(String ip, String url) {
+		this.ip = ip;
+		this.url = "http://" + url;
 	}
 
-	public String getName() {
-		return name;
+	public String getIp() {
+		return ip;
 	}
 
 	public String getUrl() {
@@ -54,7 +54,7 @@ public class DataCenterInstance {
      */
 	public boolean isHealthy() {
 		try {
-			HttpURLConnection httpURLConnection = (HttpURLConnection) executeRequest("http://" + url);
+			HttpURLConnection httpURLConnection = (HttpURLConnection) executeRequest(url);
 			httpURLConnection.setRequestMethod("GET");
 			httpURLConnection.connect();
 
@@ -72,6 +72,6 @@ public class DataCenterInstance {
 
 	@Override
 	public String toString() {
-		return url;
+		return ip;
 	}
 }
