@@ -1,10 +1,10 @@
 package io.vertx.example;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-// TODO: adjust this to handle health check
 public class DataCenterInstance {
 	public final String name;
 	public final String url;
@@ -45,5 +45,33 @@ public class DataCenterInstance {
 		conn.setDoInput(true);
 		conn.setDoOutput(false);
 		return conn;
+	}
+
+	/**
+	 * Checks health status of instance.
+	 *
+	 * @return true if instance is healthy
+     */
+	public boolean isHealthy() {
+		try {
+			HttpURLConnection httpURLConnection = (HttpURLConnection) executeRequest("http://" + url);
+			httpURLConnection.setRequestMethod("GET");
+			httpURLConnection.connect();
+
+			if (httpURLConnection.getResponseCode() != 200) {
+				return false;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return url;
 	}
 }
