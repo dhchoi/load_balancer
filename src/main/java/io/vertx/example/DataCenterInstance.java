@@ -44,6 +44,8 @@ public class DataCenterInstance {
 		URLConnection conn = url.openConnection();
 		conn.setDoInput(true);
 		conn.setDoOutput(false);
+		conn.setConnectTimeout(5000);
+		conn.setReadTimeout(5000);
 		return conn;
 	}
 
